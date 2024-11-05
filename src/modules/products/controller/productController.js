@@ -9,37 +9,38 @@ class ProductController {
   
       try {
         const product = await ProductRepository.createProducts(req.body);
-        res.status(201).json(product);
+        return res.status(201).json(product);
       } catch (err) {
-        res.status(500).json({ error: "Error registering product" });
+        return res.status(500).json({ error: "Error registering product" });
       }
     }
-
-    async viewAllProducts(){
+    
+    async viewAllProducts(res){
         try {
-            const product = await ProductRepository.viewAllProducts(req.body);
-            res.status(201).json(product);
+            const product = await ProductRepository.viewAllProducts();
+            return res.status(201).json(product);
           } catch (err) {
-            res.status(500).json({ error: "Error registering product" });
+            return res.status(500).json({ error: "Error finding product" });
           }
     }
 
     async getAllProducts(req, res){
       try {
         const product = await Product.find();
-        res.json(product);
+        return res.json(product);
       } catch (error) {
         console.error('Error fetching products:', error);
-        res.status(500).send('Server Error');
+        return res.status(500).send('Server Error');
       }
     };
 
-    async viewProductById(pid){
+    async viewProductById(res,req){
+      const { pid } = req.params;
         try {
             const product = await ProductRepository.viewProductById(pid);
-            res.status(201).json(product);
+            return res.status(201).json(product);
           } catch (err) {
-            res.status(500).json({ error: "Error registering product" });
+            return res.status(500).json({ error: "Error fetching product by idproduct" });
           }
     }
 
@@ -51,10 +52,10 @@ class ProductController {
         if (!product) {
           return res.status(404).json({ message: 'product not found' });
         }
-        res.json(product);
+        return res.json(product);
       } catch (error) {
         console.error('Error fetching product:', error);
-        res.status(500).json({ message: 'Server error' });
+        return res.status(500).json({ message: 'Server error' });
       }
     }
   }

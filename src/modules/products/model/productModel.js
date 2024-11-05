@@ -17,7 +17,11 @@ const productSchema = new mongoose.Schema({
       type: String,
       required: false,
     },
+    description: {
+      type: String,
+      required: false,
+    },
   });
   
-  const Product = mongoose.model("Product", productSchema);
+  const Product = mongoose.model("Producttbl", productSchema);
   export default Product;

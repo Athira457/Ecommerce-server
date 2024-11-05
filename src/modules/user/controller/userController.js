@@ -7,13 +7,8 @@ class UserController {
     //signup page working
     async signUp(req, res){
         const { name, email, password } = req.body;
-        try {
-            let user = await User.findOne({ email });
-            if (user) {
-              return res.status(400).json({ success: false, message: 'User already exists' });
-            }
-        
-            user = new User({ name, email, password });
+        try {    
+            const user = new User({ name, email, password });
             await user.save();
         
             return res.status(201).json({ success: true, message: 'User created successfully' });
